@@ -19,8 +19,6 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        if (Input.GetKeyDown(KeyCode.V))
-        {
             currentHealth -= amount;
             Debug.Log(gameObject.name + " took " + amount + " damage. Remaining health: " + currentHealth);
             if (currentHealth <= 0)
@@ -28,8 +26,6 @@ public class Health : MonoBehaviour
                 Die();
 
             }
-        }
-
 
     }
 
@@ -40,12 +36,17 @@ public class Health : MonoBehaviour
 
     public void Die()
     {
-        if (Score.instance != null)
-        {
-            Score.instance.AddScore(scoreValue);
-            Score.instance.AddMoney(moneyValue);
-        }
+    
+            if (Score.instance != null)
+            {
+                Score.instance.AddScore(scoreValue);
+                Score.instance.AddMoney(moneyValue);
+            }
+            Destroy(gameObject);
+        
+  
 
-        Destroy(gameObject);
+
+        
     }
 }

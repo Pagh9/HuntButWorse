@@ -14,8 +14,22 @@ public class Enemy : MonoBehaviour
     public int moneyValue = 25;
 
     private Health enemyHealth;
-
     private Score scoreManager;
+
+    public bool canMeleeAttack = true;
+    public bool canRangedAttack = true;
+    public float meleeRange = 2f;
+    public int meleeDamage = 25;
+    public float rangedRange = 10f;
+    public int rangedDamage = 10;
+    public float attackCooldown = 2f;
+    public GameObject hiveAttackPrefab;
+    public Transform hiveAttackSpawnPoint;
+    public float hiveBulletSpeed = 5.5f;
+
+    private float lastAttackTime;
+
+    
 
     private void Start()
     {
@@ -31,7 +45,7 @@ public class Enemy : MonoBehaviour
         enemyHealth = GetComponent<Health>();
         if (enemyHealth == null)
         {
-            
+            Debug.LogWarning("Enemy health component not assigned.");
         }
     }
 
@@ -39,7 +53,7 @@ public class Enemy : MonoBehaviour
     {
 
         MoveTowardsPlayer();
-        
+        TryAttack();
 
     }
 
@@ -54,6 +68,58 @@ public class Enemy : MonoBehaviour
             transform.LookAt(new Vector3(player.position.x, transform.position.y, transform.position.z));
 
         }
+    }
+
+    void TryAttack()
+    {
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        if (Time.time > lastAttackTime + attackCooldown)
+        {
+            if (canMeleeAttack && distanceToPlayer <= meleeRange)
+            {
+                MeleeAttack();
+            }
+            else if (canRangedAttack && distanceToPlayer <= rangedRange)
+            {
+                RangedAttack();
+            }
+        }
+    }
+
+    void MeleeAttack()
+    {
+        lastAttackTime = Time.time;
+        Debug.Log("Enemy performs a melee attack!");
+
+        PlayerHealth playerHealth =  player.GetComponent<PlayerHealth>();
+        if (playerHealth != null)
+        {
+            playerHealth.TakeDamage(meleeDamage);
+        }
+    }
+
+    void RangedAttack()
+    {
+        lastAttackTime = Time.time;
+        Debug.Log("Enemy performs a ranged attack!");
+
+        if (hiveAttackPrefab != null && hiveAttackSpawnPoint != null)
+        {
+            GameObject projectile = Instantiate(hiveAttackPrefab, hiveAttackSpawnPoint.position, hiveAttackSpawnPoint.rotation);
+
+            // Set projectile properties if needed
+            HiveProjectile hiveProjectile = projectile.GetComponent<HiveProjectile>();
+            if (hiveProjectile != null)
+            {
+                hiveProjectile.player = player; // Assign the player reference to the projectile
+                hiveProjectile.speed = hiveBulletSpeed; // Set projectile speed
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Projectile prefab or spawn point not assigned.");
+        }
+
     }
 
     public void TakeDamage(int damageAmount)
@@ -86,6 +152,21 @@ public class Enemy : MonoBehaviour
         Destroy(target);
     }
 
+    private void OnDrawGizmosSelected()
+    {
+        // Visualize melee range
+        if (canMeleeAttack)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, meleeRange);
+        }
 
-
+        // Visualize ranged range
+        if (canRangedAttack)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position, rangedRange);
+        }
+    }
 }
+

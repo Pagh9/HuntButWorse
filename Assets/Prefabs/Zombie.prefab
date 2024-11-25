@@ -140,6 +140,16 @@ MonoBehaviour:
   target: {fileID: 6327574059151774557}
   scoreValue: 50
   moneyValue: 25
+  canMeleeAttack: 1
+  canRangedAttack: 0
+  meleeRange: 2
+  meleeDamage: 25
+  rangedRange: 10
+  rangedDamage: 10
+  attackCooldown: 2
+  hiveAttackPrefab: {fileID: 0}
+  hiveAttackSpawnPoint: {fileID: 0}
+  hiveBulletSpeed: 5.5
 --- !u!54 &2833227067717428683
 Rigidbody:
   m_ObjectHideFlags: 0
