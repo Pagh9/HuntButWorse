@@ -5,38 +5,73 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 1f;
-    public float rotationSpeed = 1f;
+    public float speed = 5f;
+    public float rotationSpeed = 150f;
+    private bool isGrounded;
+    public float jumpForce = 10;
+
+    public Rigidbody rb;
+
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+    }
 
     // Update is called once per frame
     void Update()
     {
         movement();
+        Rotation();
+        jump();
     }
 
     void movement()
     {
-        // if i remember correctly there is 3 ways to make movement scripts, as far as i know. 
-        
-        // Get horizontal mouse movement
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("MouseY");
-
-        // Calculate the rotation amount based on mouse movement
-        Vector3 rotation = Vector3.up * mouseX * rotationSpeed * Time.deltaTime;
-        Vector3 rotation1 = Vector3.up * mouseY * rotationSpeed * Time.deltaTime;
-
-        // Apply the rotation to the character
-        transform.Rotate(rotation, Space.World);
-
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-        transform.Translate(movement * speed * Time.deltaTime, Space.World);
+        transform.Translate(movement * speed * Time.deltaTime, Space.Self);
 
-        Debug.Log("HELP ME");
+        
 
 
+    }
+
+    void Rotation()
+    {
+        // Get horizontal mouse movement
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
+
+        // Calculate the rotation amount based on mouse movement
+        Vector3 rotationHorizontal = Vector3.up * mouseX * rotationSpeed * Time.deltaTime;
+        Vector3 rotationVertical = Vector3.up * mouseY * rotationSpeed * Time.deltaTime;
+
+        // Apply the rotation to the character
+        transform.Rotate(rotationHorizontal, Space.World);
+
+        transform.Rotate(rotationVertical, Space.Self);
+        
+    }
+
+    void jump()
+    {
+       if (isGrounded && Input.GetKeyDown(KeyCode.Space))
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            isGrounded = false;
+            Debug.Log("I JUMPED BITHCES!");
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
     }
 }
