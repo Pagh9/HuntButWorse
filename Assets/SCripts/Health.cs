@@ -19,12 +19,18 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        currentHealth -= amount;
-        if (currentHealth <= 0)
+        if (Input.GetKeyDown(KeyCode.V))
         {
-            Die();
+            currentHealth -= amount;
+            Debug.Log(gameObject.name + " took " + amount + " damage. Remaining health: " + currentHealth);
+            if (currentHealth <= 0)
+            {
+                Die();
 
+            }
         }
+
+
     }
 
     public void Heal(int amount)

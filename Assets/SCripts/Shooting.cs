@@ -10,7 +10,7 @@ public class Shooting : MonoBehaviour
     public Transform shootPoint;
     public float shootingRange = 100f;
     public LayerMask enemyLayer;
-    public int bulletDamage = 50;
+    public int bulletDamage = 150;
     public float fireRate = 0.5f;
     public float bulletSpeed = 50f;
 
@@ -21,23 +21,37 @@ public class Shooting : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1") && Time.time >= nextFireTime)
         {
-            Debug.Log("I SHOOT YOU !");
+            
             nextFireTime = Time.time + fireRate;
             Shoot();
-            Debug.DrawRay(shootPoint.position, Vector3.forward * 10, Color.red, 2f);
+            
         }
     }
 
     void Shoot()
     {
+        
+        Debug.DrawRay(shootPoint.position, shootPoint.up * shootingRange, Color.red, 2f);
         RaycastHit hit;
-        if (Physics.Raycast(shootPoint.position, Vector3.forward, out hit, shootingRange, enemyLayer))
+        
+        if (Physics.Raycast(shootPoint.position, Vector3.up, out hit, shootingRange, enemyLayer))
         {
             Enemy enemy = hit.collider.GetComponent<Enemy>();
+
             if (enemy != null)
             {
+                Debug.Log($"Raycast hit: {hit.collider.name}");
                 enemy.TakeDamage(bulletDamage);
+
             }
+            else
+            {
+                Debug.LogError("Enemy script not found on hit object.");
+            }
+        }
+        else
+        {
+            Debug.Log("Raycast missed.");
         }
 
         GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);

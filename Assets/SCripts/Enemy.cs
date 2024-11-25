@@ -28,6 +28,11 @@ public class Enemy : MonoBehaviour
         {
             Debug.Log("Player Object Not Found");
         }
+        enemyHealth = GetComponent<Health>();
+        if (enemyHealth == null)
+        {
+            
+        }
     }
 
     private void Update()
@@ -35,6 +40,7 @@ public class Enemy : MonoBehaviour
 
         MoveTowardsPlayer();
         
+
     }
 
     void MoveTowardsPlayer()
@@ -55,16 +61,20 @@ public class Enemy : MonoBehaviour
        
         if (enemyHealth != null)
         {
-            Debug.Log("I TOOK DAMAGE");
+            
             enemyHealth.TakeDamage(damageAmount);
             if (enemyHealth.currentHealth <= 0)
             {
                 Die();
             }
         }
+        else
+        {
+            Debug.LogError($"Enemy {gameObject.name} does not have a Health component assigned.");
+        }
 
-       
-        
+
+
     }
     
 

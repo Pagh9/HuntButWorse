@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 3918837089780924731}
   - component: {fileID: 5080962921069257664}
   - component: {fileID: 7606523902505485411}
+  - component: {fileID: 4648657507381470190}
   - component: {fileID: 8043793283969362120}
-  - component: {fileID: 3376314888892708260}
   - component: {fileID: 2833227067717428683}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Zombie
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -108,6 +108,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4648657507381470190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6327574059151774557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82e030eb69c236348ab9dc9843df5e80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0
+  maxHealth: 150
+  scoreValue: 50
+  moneyValue: 25
 --- !u!114 &8043793283969362120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,24 +140,6 @@ MonoBehaviour:
   target: {fileID: 6327574059151774557}
   scoreValue: 50
   moneyValue: 25
---- !u!114 &3376314888892708260
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6327574059151774557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afac728b4e00ed34d8da353b7a903262, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 6327574059151774557}
-  player: {fileID: 0}
-  maxspawnRadius: 50
-  minSpawnRadius: 15
-  spawnInterval: 0
-  maxEnemies: 10
 --- !u!54 &2833227067717428683
 Rigidbody:
   m_ObjectHideFlags: 0

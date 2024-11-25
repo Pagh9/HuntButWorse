@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Enemyspawner : MonoBehaviour
 {
-    public GameObject enemyPrefab;
+    public GameObject zombiePrefab;
+    public GameObject hivePrefab;
     public Transform player;
     public float maxspawnRadius = 30f;
     public float minSpawnRadius = 15f;
@@ -64,7 +65,7 @@ public class Enemyspawner : MonoBehaviour
             
          
 
-            Instantiate(enemyPrefab, player.position + randomPoint, Quaternion.identity);
+            Instantiate(zombiePrefab, player.position + randomPoint, Quaternion.identity);
 
 
             //Vector3 spawnPosition = Vector3.zero;
