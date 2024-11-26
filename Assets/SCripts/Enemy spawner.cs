@@ -7,12 +7,16 @@ public class Enemyspawner : MonoBehaviour
     public GameObject zombiePrefab;
     public GameObject hivePrefab;
     public Transform player;
+
     public float maxspawnRadius = 30f;
     public float minSpawnRadius = 15f;
     public float spawnInterval;
     public int maxEnemies = 10;
 
+    public float rareSpawnChance = 0.2f; // 20% chance for hive enemy
+
     private float spawnTimer = 0f;
+
 
     // Start is called before the first frame update
     private void Start()
@@ -62,10 +66,11 @@ public class Enemyspawner : MonoBehaviour
                 randomPoint.y = 0; // Optional: keep objects on a plane
             }
             while (randomPoint.magnitude < minSpawnRadius);
-            
-         
 
-            Instantiate(zombiePrefab, player.position + randomPoint, Quaternion.identity);
+            GameObject enemyPrefab = Random.value < rareSpawnChance ? hivePrefab : zombiePrefab;
+
+            Instantiate(enemyPrefab, player.position + randomPoint, Quaternion.identity);
+            
 
 
             //Vector3 spawnPosition = Vector3.zero;
