@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
@@ -28,7 +29,7 @@ public class Enemy : MonoBehaviour
     public float hiveBulletSpeed = 5.5f;
 
     private float lastAttackTime;
-
+    public NavMeshAgent nav;
     
 
     private void Start()
@@ -47,6 +48,13 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogWarning("Enemy health component not assigned.");
         }
+        nav = GetComponent<NavMeshAgent>();
+        if (nav == null)
+        {
+            Debug.LogError("NavMeshAgent component not found on Enemy.");
+        }
+        nav.speed = speed; // Set speed
+        nav.stoppingDistance = meleeRange; // Set stopping distance
     }
 
     private void Update()
@@ -59,7 +67,17 @@ public class Enemy : MonoBehaviour
 
     void MoveTowardsPlayer()
     {
-        if (player != null)
+
+        nav.SetDestination(player.position);
+        if (Vector3.Distance(transform.position, player.position) <= meleeRange)
+        {
+            nav.isStopped = true; 
+        }
+        else
+        {
+            nav.isStopped = false; 
+        }
+        /*if (player != null)
         {
             Vector3 direction = (player.position - transform.position).normalized;
 
@@ -67,7 +85,7 @@ public class Enemy : MonoBehaviour
 
             transform.LookAt(new Vector3(player.position.x, transform.position.y, transform.position.z));
 
-        }
+        }*/
     }
 
     void TryAttack()

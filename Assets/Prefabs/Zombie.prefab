@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5660644671578016265}
   - component: {fileID: 3918837089780924731}
   - component: {fileID: 5080962921069257664}
+  - component: {fileID: -705804630827736223}
   - component: {fileID: 7606523902505485411}
   - component: {fileID: 4648657507381470190}
   - component: {fileID: 8043793283969362120}
@@ -87,6 +88,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!195 &-705804630827736223
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6327574059151774557}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0.1
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!65 &7606523902505485411
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -150,6 +173,7 @@ MonoBehaviour:
   hiveAttackPrefab: {fileID: 0}
   hiveAttackSpawnPoint: {fileID: 0}
   hiveBulletSpeed: 5.5
+  nav: {fileID: -705804630827736223}
 --- !u!54 &2833227067717428683
 Rigidbody:
   m_ObjectHideFlags: 0

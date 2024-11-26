@@ -12,6 +12,10 @@ public class PlayerMovement : MonoBehaviour
 
     public Rigidbody rb;
 
+    public Transform playerCamera;
+    private float verticalRotation = 0f;
+    public float verticalLookLimit = 85f;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -42,19 +46,21 @@ public class PlayerMovement : MonoBehaviour
 
     void Rotation()
     {
-        // Get horizontal mouse movement
+        // Get mouse movement
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 
-        // Calculate the rotation amount based on mouse movement
+        // Horizontal rotation (Player body rotation)
         Vector3 rotationHorizontal = Vector3.up * mouseX * rotationSpeed * Time.deltaTime;
-        Vector3 rotationVertical = Vector3.up * mouseY * rotationSpeed * Time.deltaTime;
-
-        // Apply the rotation to the character
         transform.Rotate(rotationHorizontal, Space.World);
 
-        transform.Rotate(rotationVertical, Space.Self);
-        
+        // Vertical rotation (Camera rotation)
+        verticalRotation -= mouseY * rotationSpeed * Time.deltaTime;
+        verticalRotation = Mathf.Clamp(verticalRotation, -verticalLookLimit, verticalLookLimit);
+
+        playerCamera.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
+
+
     }
 
     void jump()
