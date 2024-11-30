@@ -48,13 +48,7 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogWarning("Enemy health component not assigned.");
         }
-        nav = GetComponent<NavMeshAgent>();
-        if (nav == null)
-        {
-            Debug.LogError("NavMeshAgent component not found on Enemy.");
-        }
-        nav.speed = speed; // Set speed
-        nav.stoppingDistance = meleeRange; // Set stopping distance
+
     }
 
     private void Update()
